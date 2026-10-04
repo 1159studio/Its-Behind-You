@@ -7,15 +7,15 @@ extends Node
 @export var close_boost : float = 2.5           # extra speed when it is right on you (in the danger zone)
 
 # --- Peek timing (a peek only helps while it's ON you; the game TELLS you when) ---
-@export var danger_range : float = 27.0     # once it's this close, the "LOOK BACK!" tell fires (was 34 — pulled in so the tell shows for a shorter window)
+@export var danger_range : float = 30.0   # once it's this close, the "LOOK BACK!" tell fires (was 34 — pulled in so the tell shows for a shorter window)
 @export var good_pushback : float = 52.0    # a timed peek wards it off hard
 @export var early_cost_mult : float = 0.5   # a wasted (too-early) peek only burns half nerve, never a death
 
 # --- Nerve / stamina (kills the mash-to-win exploit, but stays sustainable on good play) ---
 @export var max_stamina : float = 100.0
-@export var peek_cost : float = 33.6          # each real peek spends this much (+20% over the old 28)
-@export var stamina_regen : float = 9.0       # per second — refills ~one peek per danger cycle, so nerve stays a real resource
-@export var peek_cooldown : float = 0.45      # min seconds between peeks (key + touch)
+@export var peek_cost : float = 30.0     # each real peek spends this much (+20% over the old 28)
+@export var stamina_regen : float = 10.0     # per second — refills ~one peek per danger cycle, so nerve stays a real resource
+@export var peek_cooldown : float = 0.40     # min seconds between peeks (key + touch)
 
 var creature_distance : float
 var is_game_over : bool = false
@@ -25,6 +25,7 @@ var peek_cooldown_timer : float = 0.0
 var feedback_active : bool = false
 var in_danger : bool = false   # true while the creature is inside danger_range (drives the tell)
 var elapsed : float = 0.0   # time since the run started, drives the difficulty ramp
+var show_danger_warning : bool = true
 
 # stamina bar (built in code, added to the UI layer)
 var stamina_fill : ColorRect
@@ -48,6 +49,9 @@ var footstep_timer : float = 0.0
 var footstep_interval : float = 2.5
 
 func _ready():
+	var tree_root = get_tree().root
+	show_danger_warning = tree_root.get_meta("selected_difficulty", "easy") != "hard"
+
 	creature_distance = starting_distance
 	stamina = max_stamina
 
@@ -156,7 +160,7 @@ func _process(delta):
 		in_danger = now_danger
 		if not in_danger and not feedback_active:
 			feedback_label.visible = false
-	if in_danger and not feedback_active:
+	if in_danger and not feedback_active and show_danger_warning:
 		feedback_label.text = "LOOK BEHIND YOU!"
 		feedback_label.modulate = Color(1.0, 0.25, 0.22)
 		feedback_label.visible = true
