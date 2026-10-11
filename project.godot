@@ -20,14 +20,24 @@ run/main_scene="uid://ccctt0oxjws40"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="uid://bk6ybidog5v2"
 
+[autoload]
+
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+Difficulty="*res://script/difficulty.gd"
+
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/mode=2
+window/size/mode=0
+window/size/resizable=true
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
 window/handheld/orientation="landscape"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg")
 
 [input]
 

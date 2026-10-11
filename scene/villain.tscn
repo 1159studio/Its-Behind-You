@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://daipm4yni5lpj"]
+[gd_scene format=3 uid="uid://daipm4yni5lpj"]
 
 [ext_resource type="Texture2D" uid="uid://dgudmgtgx3p8r" path="res://asset/object/villain/DarkSamurai (64x64).png" id="1_06h45"]
 [ext_resource type="Script" uid="uid://bccq0t3uk6dxe" path="res://script/villain.gd" id="1_i87x0"]
@@ -138,7 +138,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_w1k2g")
 }],
-"loop": true,
+"loop": 1,
 "name": &"Idle",
 "speed": 5.0
 }, {
@@ -155,7 +155,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ruqjk")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 5.0
 }, {
@@ -202,7 +202,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_edgjs")
 }],
-"loop": false,
+"loop": 0,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -231,7 +231,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_igscg")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 5.0
 }]
@@ -240,15 +240,16 @@ animations = [{
 radius = 7.0
 height = 20.0
 
-[node name="villain" type="CharacterBody2D"]
+[node name="villain" type="CharacterBody2D" unique_id=1771870213]
 z_index = 1000
 script = ExtResource("1_i87x0")
 base_offset = 225.0
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2139331124]
 sprite_frames = SubResource("SpriteFrames_l3m3m")
 animation = &"run"
+autoplay = "run"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2107179419]
 position = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_7rsk8")
